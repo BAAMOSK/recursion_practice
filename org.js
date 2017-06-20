@@ -1,158 +1,255 @@
-data = [
+const data = [
   {
     name: 'Zuckerberg',
-    parent: null
+    boss: null,
   },
   {
     name: 'Schroepfer',
-    parent: 'Zuckerberg'
+    boss: 'Zuckerberg',
   },
   {
     name: 'Bosworth',
-    parent: 'Schroepfer'
+    boss: 'Schroepfer',
   },
   {
     name: 'Steve',
-    parent: 'Bosworth'
+    boss: 'Bosworth',
   },
   {
     name: 'Kyle',
-    parent: 'Bosworth'
+    boss: 'Bosworth',
   },
   {
     name: 'Andra',
-    parent: 'Bosworth'
+    boss: 'Bosworth',
   },
   {
     name: 'Zhao',
-    parent: 'Schroepfer'
+    boss: 'Schroepfer',
   },
   {
     name: 'Richie',
-    parent: 'Zhao'
+    boss: 'Zhao',
   },
   {
     name: 'Sofia',
-    parent: 'Zhao'
+    boss: 'Zhao',
   },
   {
     name: 'Jen',
-    parent: 'Zhao'
+    boss: 'Zhao',
   },
   {
     name: 'Schrage',
-    parent: 'Zuckerberg'
+    boss: 'Zuckerberg',
   },
   {
     name: 'VanDyck',
-    parent: 'Schrage'
+    boss: 'Schrage',
   },
   {
     name: 'Sabrina',
-    parent: 'VanDyck'
+    boss: 'VanDyck',
   },
   {
     name: 'Michelle',
-    parent: 'VanDyck'
+    boss: 'VanDyck',
   },
   {
     name: 'Josh',
-    parent: 'VanDyck'
+    boss: 'VanDyck',
   },
   {
     name: 'Swain',
-    parent: 'Schrage'
+    boss: 'Schrage',
   },
   {
     name: 'Blanch',
-    parent: 'Swain'
+    boss: 'Swain',
   },
   {
     name: 'Tom',
-    parent: 'Swain'
+    boss: 'Swain',
   },
   {
     name: 'Joe',
-    parent: 'Swain'
+    boss: 'Swain',
   },
 
   {
     name: 'Sandberg',
-    parent: 'Zuckerberg'
+    boss: 'Zuckerberg',
   },
   {
     name: 'Goler',
-    parent: 'Sandberg'
+    boss: 'Sandberg',
   },
   {
     name: 'Eddie',
-    parent: 'Goler'
+    boss: 'Goler',
   },
   {
     name: 'Julie',
-    parent: 'Goler'
+    boss: 'Goler',
   },
   {
     name: 'Annie',
-    parent: 'Goler'
+    boss: 'Goler',
   },
   {
     name: 'Hernandez',
-    parent: 'Sandberg'
+    boss: 'Sandberg',
   },
   {
     name: 'Rowi',
-    parent: 'Hernandez'
+    boss: 'Hernandez',
   },
   {
     name: 'Inga',
-    parent: 'Hernandez'
+    boss: 'Hernandez',
   },
   {
     name: 'Morgan',
-    parent: 'Hernandez'
+    boss: 'Hernandez',
   },
   {
     name: 'Moissinac',
-    parent: 'Sandberg'
+    boss: 'Sandberg',
   },
   {
     name: 'Amy',
-    parent: 'Moissinac'
+    boss: 'Moissinac',
   },
   {
     name: 'Chuck',
-    parent: 'Moissinac'
+    boss: 'Moissinac',
   },
   {
     name: 'Vinni',
-    parent: 'Moissinac'
+    boss: 'Moissinac',
   },
   {
     name: 'Kelley',
-    parent: 'Sandberg'
+    boss: 'Sandberg',
   },
   {
     name: 'Eric',
-    parent: 'Kelley'
+    boss: 'Kelley',
   },
   {
     name: 'Ana',
-    parent: 'Kelley'
+    boss: 'Kelley',
   },
   {
     name: 'Wes',
-    parent: 'Kelley'
-  }
+    boss: 'Kelley',
+  },
 ];
+//RECURSIVE IMPLEMENTATION
+// function traverse(orgChart, boss) {
+//   let node = {};
 
-function traverse(orgChart, boss) {
-  let node = {};
+//   orgChart.filter(person => person.parent === boss)
+//   .forEach(item => (node[item.name] = traverse(orgChart, item.name)));
+//   return node;
+// }
 
-  orgChart.filter(person => person.parent === boss)
-  .forEach(item => (node[item.name] = traverse(orgChart, item.name)));
-  return node;
+//ITERATIVE IMPLEMENTATION
+function orgThis(data) {
+  const result = { name: data[0].name };
+  //Get all employees under Zuck-------
+  result.executives = data
+    .map(person => {
+      if (person.boss === 'Zuckerberg') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  //Get all employees under Schroepfer--------------
+  result.executives[0].managers = data
+    .map(person => {
+      if (person.boss == 'Schroepfer') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  //---------------Managers under Schroepfer
+  result.executives[0].managers[0].employees = data
+    .map(person => {
+      if (person.boss == 'Bosworth') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  result.executives[0].managers[1].employees = data
+    .map(person => {
+      if (person.boss == 'Zhao') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  //Get all employees under Schrage-----------------
+  result.executives[1].managers = data
+    .map(person => {
+      if (person.boss == 'Schrage') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  //----------------Managers under Schrage
+  result.executives[1].managers[0].employees = data
+    .map(person => {
+      if (person.boss == 'VanDyck') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  result.executives[1].managers[1].employees = data
+    .map(person => {
+      if (person.boss == 'Swain') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  //Get all employees under Sandberg--------------
+  result.executives[2].managers = data
+    .map(person => {
+      if (person.boss == 'Sandberg') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  //-----------------Managers under Sandberg
+  result.executives[2].managers[0].employees = data
+    .map(person => {
+      if (person.boss == 'Goler') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  result.executives[2].managers[1].employees = data
+    .map(person => {
+      if (person.boss == 'Hernandez') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  result.executives[2].managers[2].employees = data
+    .map(person => {
+      if (person.boss == 'Moissinac') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+  result.executives[2].managers[3].employees = data
+    .map(person => {
+      if (person.boss == 'Kelley') {
+        return person;
+      }
+    })
+    .filter(Boolean);
+
+  return JSON.stringify(result, null, 2);
 }
 
-const result = traverse(data, null);
-console.log(JSON.stringify(result, null, 2));
+console.log(orgThis(data));
