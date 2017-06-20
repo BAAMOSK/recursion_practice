@@ -5,3 +5,13 @@ let countingSheep = (num) => {
 }
 
 countingSheep(10);
+
+//Iterative
+let cs2 = (num) => {
+  for (let i = num; i > 0; i--) {
+    console.log(`Dude, there's ${i} sheep.  And another one's jumpin'...`)
+  }
+  console.log("All them sheep did jump that there fence.");
+}
+
+console.log(cs2(10));
