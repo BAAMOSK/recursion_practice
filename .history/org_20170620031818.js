@@ -149,12 +149,10 @@ const data = [
 function traverse(orgChart, boss) {
   let node = {};
 
-  orgChart.filter(person => person.boss === boss)
+  orgChart.filter(person => person.parent === boss)
   .forEach(item => (node[item.name] = traverse(orgChart, item.name)));
   return node;
 }
-const answer = traverse(data, null);
-console.log(JSON.stringify(answer, null, 2));
 
 //ITERATIVE IMPLEMENTATION
 // function orgThis(data) {

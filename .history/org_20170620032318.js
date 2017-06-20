@@ -154,7 +154,7 @@ function traverse(orgChart, boss) {
   return node;
 }
 const answer = traverse(data, null);
-console.log(JSON.stringify(answer, null, 2));
+console.log(JSON.stringify(answer, null, 20));
 
 //ITERATIVE IMPLEMENTATION
 // function orgThis(data) {
